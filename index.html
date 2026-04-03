@@ -1,13 +1,60 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet"><style>
+
+<title>💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
 body, html {
     margin: 0;
     padding: 0;
     font-family: 'Playfair Display', serif;
     overflow: hidden;
+}
+
+/* ROTATE SCREEN */
+#rotate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: white;
+    font-size: 22px;
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* SHOW ROTATE ONLY ON MOBILE PORTRAIT */
+@media only screen and (max-width: 900px) and (orientation: portrait) {
+    #rotate {
+        display: flex;
+    }
+
+    section {
+        display: none;
+    }
+}
+
+/* MOBILE TEXT FIX */
+@media only screen and (max-width: 900px) {
+    h1 {
+        font-size: 32px;
+        letter-spacing: 3px;
+    }
+
+    h2 {
+        font-size: 14px;
+    }
+
+    .frame {
+        padding: 20px;
+    }
 }
 
 /* PAGES */
@@ -73,62 +120,104 @@ button {
     cursor: pointer;
     transition: 0.3s;
 }
+
 button:hover {
     background: white;
     color: black;
 }
-</style></head><body><audio id="music" src="bairan.mp3" loop></audio>
+</style>
+</head>
 
-<!-- PAGE 1 --><section id="page1" class="active">
+<body>
+
+<!-- ROTATE MESSAGE -->
+<div id="rotate">
+  <div>Rotate your phone 📱➡️</div>
+</div>
+
+<audio id="music" src="bairan.mp3" loop></audio>
+
+<!-- PAGE 1 -->
+<section id="page1" class="active">
 <div class="frame">
 <h1>WHAT'S TODAY</h1>
 <button onclick="start()">ENTER</button>
 </div>
-</section><!-- PAGE 2 --><section id="page2">
+</section>
+
+<!-- PAGE 2 -->
+<section id="page2">
 <div class="frame">
 <h1>IT'S MY <br>KUCHUPUCHU KA <br>BIRTHDAYYYYY</h1>
 <h2 id="text">Does my Akshu like his birthday? 🥰</h2>
 <button onclick="yesClick()">YES</button>
 <button id="no">NO</button>
 </div>
-</section><!-- PAGE 3 --><section id="page3">
+</section>
+
+<!-- PAGE 3 -->
+<section id="page3">
 <div class="frame">
 <h1>HAPPIEST BIRTHDAY MERA AKSHU</h1>
 <h2>you’re the bestest thing happened to me 💖</h2>
 <button onclick="go('page4')">NEXT</button>
 </div>
-</section><!-- PAGE 4 --><section id="page4">
+</section>
+
+<!-- PAGE 4 -->
+<section id="page4">
 <div class="frame">
 <h1>you mean so much to me</h1>
 <h2>the cutest sweetest hawtest person ik kisi bhi bkl ko apna pyara day ruin krne mat dena!! 💖</h2>
 <h2 style="font-size:14px;">tu ne hi bola tha paragraph nah likhne 😒</h2>
 <button onclick="go('page5')">NEXT</button>
 </div>
-</section><!-- PAGE 5 (FULL BG VIBE) --><section id="page5">
+</section>
+
+<!-- PAGE 5 -->
+<section id="page5">
 <div class="frame">
 <button onclick="go('page6')">NEXT</button>
 </div>
-</section><!-- PAGE 6 --><section id="page6">
+</section>
+
+<!-- PAGE 6 -->
+<section id="page6">
 <div class="frame">
 <h1>happiest birthday mera baccha</h1>
 <h2>thank you sm for everything cutu 💖</h2>
 <button onclick="go('page1')">Replay 💖</button>
 </div>
-</section><script>
+</section>
+
+<script>
+// FULLSCREEN FUNCTION
+function openFullscreen() {
+    let elem = document.documentElement;
+
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen(); // Safari
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen(); // IE
+    }
+}
 
 function start(){
-document.getElementById("music").play();
-go("page2");
+    openFullscreen(); // 👈 fullscreen trigger
+    document.getElementById("music").play();
+    go("page2");
 }
 
 function go(id){
-document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
 }
 
 function yesClick(){
-document.getElementById("text").innerText="yey aagya line pe 😏💖";
-setTimeout(()=>go("page3"),1200);
+    document.getElementById("text").innerText="yey aagya line pe 😏💖";
+    setTimeout(()=>go("page3"),1200);
 }
 
 let no=document.getElementById("no");
@@ -136,20 +225,22 @@ let text=document.getElementById("text");
 let clicks=0;
 
 no.addEventListener("click",()=>{
-clicks++;
+    clicks++;
 
-if(clicks==1){
-text.innerText="huh teri himmat kaise hui? 😒";
-}
-else if(clicks==2){
-text.innerText="tu nahi sudherega 😑";
-}
-else{
-text.innerText="ab pakad ke dikha 😏";
-no.style.position="absolute";
-no.style.left=Math.random()*80+"vw";
-no.style.top=Math.random()*80+"vh";
-}
+    if(clicks==1){
+        text.innerText="huh teri himmat kaise hui? 😒";
+    }
+    else if(clicks==2){
+        text.innerText="tu nahi sudherega 😑";
+    }
+    else{
+        text.innerText="ab pakad ke dikha 😏";
+        no.style.position="absolute";
+        no.style.left=Math.random()*80+"vw";
+        no.style.top=Math.random()*80+"vh";
+    }
 });
-</script></body>
+</script>
+
+</body>
 </html>
